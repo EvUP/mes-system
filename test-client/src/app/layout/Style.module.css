@@ -1,0 +1,11 @@
+.appContainer {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.application {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
