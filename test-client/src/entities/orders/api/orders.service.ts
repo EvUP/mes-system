@@ -1,8 +1,8 @@
-import { axiosInstance } from '../../../shared';
+import { axiosInstance } from '../../../shared/api';
 
 class OrdersService {
-  async getOrders() {
-    const response = await axiosInstance.get('/orders');
+  async getOrders(page: number = 1, limit: number = 10) {
+    const response = await axiosInstance.get(`/orders?page=${page}&limit=${limit}`);
     return response.data;
   }
 
@@ -12,4 +12,4 @@ class OrdersService {
   }
 }
 
-export default new OrdersService();
+export const ordersService = new OrdersService();

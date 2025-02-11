@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { OrdersTable, UpdateOrderModal } from '../../entities/orders';
-import { GanttChart } from '../../widgets';
+import { fetchOrders, OrdersTable, TOrderEntity, UpdateOrderModal } from '../../entities/orders';
 import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
-import { fetchOrders } from '../../entities/orders';
-import { TOrderEntity } from '../../entities/orders';
+import { GanttChart } from '../../widgets';
 import Style from './Style.module.css';
 
 export default function OrdersPage(): React.JSX.Element {
   const [modalState, setModalState] = useState(false);
-  const [order, setOrder] = useState<TOrderEntity | null>(null); // ✅ Используем null
+  const [order, setOrder] = useState<TOrderEntity | null>(null);
+  const [paginationModel, setPaginationModel] = useState({ page: 0, pageSize: 10 });
   const dispatch = useAppDispatch();
   const { list: orders, loading } = useAppSelector((state) => state.orders);
 
   useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
+    dispatch(fetchOrders({ page: paginationModel.page, limit: paginationModel.pageSize }));
+  }, [dispatch, paginationModel]);
 
   return (
     <div className={Style.container}>
@@ -26,6 +25,11 @@ export default function OrdersPage(): React.JSX.Element {
         }}
         list={orders}
         loading={loading}
+        paginationModel={paginationModel}
+        onPageChange={(newPage) => setPaginationModel((prev) => ({ ...prev, page: newPage }))}
+        onPageSizeChange={(newPageSize) =>
+          setPaginationModel((prev) => ({ ...prev, pageSize: newPageSize }))
+        }
       />
       <UpdateOrderModal
         open={modalState}

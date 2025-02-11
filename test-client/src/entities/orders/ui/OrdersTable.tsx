@@ -8,12 +8,18 @@ type OrderTableProps = {
   handleSetOrder: (order: TOrderEntity) => void;
   loading: boolean;
   list: TOrderEntity[];
+  onPageChange: (newPage: number) => void;
+  onPageSizeChange: (newPageSize: number) => void;
+  paginationModel: { page: number; pageSize: number };
 };
 
 export default function OrdersTable({
   handleSetOrder,
   loading,
   list,
+  onPageChange,
+  onPageSizeChange,
+  paginationModel,
 }: OrderTableProps): React.JSX.Element {
   if (loading) return <CircularProgress />;
 
@@ -40,8 +46,13 @@ export default function OrdersTable({
     <DataGrid
       rows={list}
       columns={columns}
-      onRowClick={(order) => {
-        handleSetOrder(order.row);
+      paginationModel={paginationModel}
+      onPaginationModelChange={(newPaginationModel) => {
+        onPageChange(newPaginationModel.page);
+        onPageSizeChange(newPaginationModel.pageSize);
+      }}
+      onRowClick={(row) => {
+        handleSetOrder(row.row);
       }}
     />
   );

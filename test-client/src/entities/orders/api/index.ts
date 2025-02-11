@@ -1,3 +1,3 @@
-import ordersService from './orders.service';
+import { ordersService } from './orders.service';
 
 export { ordersService };

@@ -1,8 +1,10 @@
+import { lazy } from 'react';
 import Layout from '../../layout/Layout';
-import OrdersPage from '../../../pages/Orders/OrdersPage';
-import EquipmentPage from '../../../pages/Equipment/EquipmentPage';
-import LoginPage from '../../../pages/Login/LoginPage';
 import { GardLoader } from '../../layout/GardLoader';
+
+const OrdersPage = lazy(() => import('../../../pages/Orders'));
+const EquipmentPage = lazy(() => import('../../../pages/Equipment'));
+const LoginPage = lazy(() => import('../../../pages/Login'));
 
 export const router = [
   {
@@ -10,18 +12,9 @@ export const router = [
     element: <Layout />,
     path: '',
     children: [
-      {
-        path: '/login',
-        element: <LoginPage />,
-      },
-      {
-        path: '/orders',
-        element: <OrdersPage />,
-      },
-      {
-        path: '/equipment',
-        element: <EquipmentPage />,
-      },
+      { path: '/login', element: <LoginPage /> },
+      { path: '/orders', element: <OrdersPage /> },
+      { path: '/equipment', element: <EquipmentPage /> },
     ],
   },
 ];
