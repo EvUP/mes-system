@@ -9,4 +9,5 @@ export type TOrderEntity = {
   endDate: string;
   createdAt: string;
   updatedAt: string;
+  duration: number;
 };

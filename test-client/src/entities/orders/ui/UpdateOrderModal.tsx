@@ -37,7 +37,7 @@ export default function UpdateOrderModal({
 
   const handleSave = async () => {
     await dispatch(updateOrderStatus({ id: orderId, status }));
-    await dispatch(fetchOrders());
+    await dispatch(fetchOrders({ page: 1, limit: 10 }));
     onClose();
   };
 
