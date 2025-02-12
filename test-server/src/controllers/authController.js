@@ -40,7 +40,7 @@ class AuthController {
         .cookie('accessToken', accessToken, cookieConfig.access)
         .json({
           user: { id: user.id, username: user.username, role: user.role },
-          accessToken, // ✅ теперь клиенту возвращается accessToken
+          accessToken, 
         });
     } catch (error) {
       console.error('Ошибка сервера:', error);
@@ -73,7 +73,7 @@ class AuthController {
 
       return res.json({
         user: { id: user.id, username: user.username, role: user.role },
-        accessToken, // ✅ возвращаем accessToken
+        accessToken, 
       });
     } catch (error) {
       console.error('Ошибка получения текущего пользователя:', error);

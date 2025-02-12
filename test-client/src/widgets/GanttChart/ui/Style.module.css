@@ -1,0 +1,23 @@
+.chartContainer {
+    padding: 24px;
+    margin-top: 24px;
+  }
+  
+  .chartHeader {
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  .chartControls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  
+  .detailBox {
+    margin-top: 24px;
+    padding: 16px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+  }
+  

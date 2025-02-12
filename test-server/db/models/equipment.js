@@ -23,12 +23,29 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM('Работает', 'Остановлено', 'Техническое обслуживание'),
         allowNull: false,
       },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
     },
     {
       sequelize,
       modelName: 'Equipment',
-    },
+      timestamps: true,
+      hooks: {
+        beforeUpdate: (equipment) => {
+          equipment.updatedAt = new Date(); 
+        },
+      },
+    }
   );
+  
 
   return Equipment;
 };

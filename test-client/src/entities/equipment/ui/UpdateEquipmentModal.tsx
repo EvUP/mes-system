@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../shared/lib/hooks';
-import { fetchEquipment, updateEquipmentStatus } from '../model/equipmentSlice';
+import { fetchEquipment, updateEquipmentStatus } from '../model/equipmentThunks';
 
 export default function UpdateEquipmentModal({
   open,
@@ -52,6 +52,7 @@ export default function UpdateEquipmentModal({
           <Select value={status} onChange={(e) => setStatus(e.target.value)}>
             <MenuItem value="Работает">Работает</MenuItem>
             <MenuItem value="Остановлено">Остановлено</MenuItem>
+            <MenuItem value="Техническое обслуживание">Техническое обслуживание</MenuItem>
           </Select>
         </FormControl>
       </DialogContent>

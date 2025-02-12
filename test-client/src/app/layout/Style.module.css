@@ -9,3 +9,37 @@
   flex-direction: column;
   flex: 1;
 }
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.userText {
+  flex-grow: 1;
+}
+
+.mobileMenuButton {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+@media (max-width: 600px) {
+  .mobileMenuButton {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .desktopMenu {
+    display: none;
+  }
+
+  .hideOnMobile {
+    display: none;
+  }
+}

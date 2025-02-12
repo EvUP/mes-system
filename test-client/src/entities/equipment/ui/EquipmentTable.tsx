@@ -1,12 +1,13 @@
-import { CircularProgress } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Box, CircularProgress } from '@mui/material';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../shared/lib/hooks';
-import { fetchEquipment } from '../model/equipmentSlice';
 import { timestampToDDMMYY } from '../../../shared/utils/date-helper.util';
+import { fetchEquipment } from '../model/equipmentThunks';
+import type { EquipmentT } from '../model/types';
 
 type EquipmentTableProps = {
-  handleSetOrder: (equipment: { id: number; status: string }) => void;
+  handleSetOrder: (equipment: EquipmentT) => void;
 };
 
 export default function EquipmentTable({ handleSetOrder }: EquipmentTableProps): React.JSX.Element {
@@ -19,30 +20,39 @@ export default function EquipmentTable({ handleSetOrder }: EquipmentTableProps):
 
   if (loading) return <CircularProgress />;
 
-  const columns: GridColDef[] = [
-    { field: 'name', headerName: 'Оборудование', flex: 1 },
-    { field: 'status', headerName: 'Статус', flex: 1 },
+  const columns: GridColDef<EquipmentT>[] = [
+    { field: 'name', headerName: 'Оборудование', minWidth: 200, flex: 1 },
+    { field: 'status', headerName: 'Статус', minWidth: 150, flex: 1 },
     {
       field: 'createdAt',
       headerName: 'Дата создания',
+      minWidth: 180,
       flex: 1,
-      valueFormatter: (value) => timestampToDDMMYY(value),
+      renderCell: (params: GridRenderCellParams) => {
+        if (!params.value) return 'Нет данных';
+        return timestampToDDMMYY(String(params.value));
+      },
     },
     {
       field: 'updatedAt',
       headerName: 'Дата обновления',
+      minWidth: 180,
       flex: 1,
-      valueFormatter: (value) => timestampToDDMMYY(value),
+      renderCell: (params: GridRenderCellParams) => {
+        if (!params.value) return 'Нет данных';
+        return timestampToDDMMYY(String(params.value));
+      },
     },
   ];
 
   return (
-    <div>
+    <Box sx={{ width: '100%', overflowX: 'auto' }}>
       <DataGrid
-        rows={list}
+        rows={list || []} 
         columns={columns}
+        getRowId={(row) => row.id}
         onRowClick={(equipment) => handleSetOrder(equipment.row)}
       />
-    </div>
+    </Box>
   );
 }
