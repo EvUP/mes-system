@@ -1,8 +1,9 @@
 import React from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { CircularProgress, Box } from '@mui/material';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { CircularProgress, Box, IconButton } from '@mui/material';
 import { timestampToDDMMYY } from '../../../shared';
 import { TOrderEntity } from '../type/orderEntity';
+import EditIcon from '@mui/icons-material/Edit';
 
 type OrderTableProps = {
   handleSetOrder: (order: TOrderEntity) => void;
@@ -27,7 +28,20 @@ export default function OrdersTable({
     { field: 'orderNumber', headerName: '№ Заказа', minWidth: 150, flex: 1 },
     { field: 'productName', headerName: 'Продукт', minWidth: 200, flex: 1 },
     { field: 'quantity', headerName: 'Кол-во', minWidth: 100, flex: 1 },
-    { field: 'status', headerName: 'Статус', minWidth: 150, flex: 1 },
+    {
+      field: 'status',
+      headerName: 'Статус',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (params: GridRenderCellParams) => (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <span>{params.value}</span>
+          <IconButton size="small" onClick={() => handleSetOrder(params.row)}>
+            <EditIcon fontSize="small" />
+          </IconButton>
+        </Box>
+      ),
+    },
     {
       field: 'startDate',
       headerName: 'Дата старта',
@@ -55,8 +69,12 @@ export default function OrdersTable({
           onPageSizeChange(newPaginationModel.pageSize);
         }}
         pageSizeOptions={[10, 25, 50]}
-        onRowClick={(row) => handleSetOrder(row.row)}
+        sx={{
+          backgroundColor: 'white',
+          borderRadius: 2,
+          boxShadow: 2, 
+        }}
       />
     </Box>
   );
-}  
+}

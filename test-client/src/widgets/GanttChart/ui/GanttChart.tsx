@@ -91,6 +91,9 @@ const GanttChart = ({ data }: { data: TOrderEntity[] }) => {
           <Typography variant="body1">
             <strong>Длительность:</strong> {Math.round(selectedDetail.duration / 3600000)} ч.
           </Typography>
+          <button className={styles.closeButton} onClick={() => setSelectedDetail(null)}>
+            Закрыть
+          </button>
         </Box>
       )}
 

@@ -1,8 +1,8 @@
+import { Alert, Box, Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { TextField, Button, Box, Alert } from '@mui/material';
-import { useAppDispatch } from '../../../shared';
-import { loginThunk } from '../../../entities';
 import { useNavigate } from 'react-router-dom';
+import { loginThunk } from '../../../entities';
+import { useAppDispatch } from '../../../shared';
 
 export default function LoginForm(): React.JSX.Element {
   const navigate = useNavigate();
@@ -51,7 +51,11 @@ export default function LoginForm(): React.JSX.Element {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <Button type="submit" variant="contained" color="primary">
+      <Button
+        type="submit"
+        variant="contained"
+        sx={{ backgroundColor: '#334', '&:hover': { backgroundColor: '#115293' } }}
+      >
         Войти
       </Button>
     </Box>

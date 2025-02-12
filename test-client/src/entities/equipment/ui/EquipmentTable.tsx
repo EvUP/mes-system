@@ -1,5 +1,6 @@
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, IconButton } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import EditIcon from '@mui/icons-material/Edit';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../shared/lib/hooks';
 import { timestampToDDMMYY } from '../../../shared/utils/date-helper.util';
@@ -22,37 +23,51 @@ export default function EquipmentTable({ handleSetOrder }: EquipmentTableProps):
 
   const columns: GridColDef<EquipmentT>[] = [
     { field: 'name', headerName: 'Оборудование', minWidth: 200, flex: 1 },
-    { field: 'status', headerName: 'Статус', minWidth: 150, flex: 1 },
+    {
+      field: 'status',
+      headerName: 'Статус',
+      minWidth: 150,
+      flex: 1,
+      renderCell: (params: GridRenderCellParams) => (
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <span>{params.value}</span>
+          <IconButton size="small" onClick={() => handleSetOrder(params.row)}>
+            <EditIcon fontSize="small" />
+          </IconButton>
+        </Box>
+      ),
+    },
     {
       field: 'createdAt',
       headerName: 'Дата создания',
       minWidth: 180,
       flex: 1,
-      renderCell: (params: GridRenderCellParams) => {
-        if (!params.value) return 'Нет данных';
-        return timestampToDDMMYY(String(params.value));
-      },
+      renderCell: (params: GridRenderCellParams) =>
+        params.value ? timestampToDDMMYY(String(params.value)) : 'Нет данных',
     },
     {
       field: 'updatedAt',
       headerName: 'Дата обновления',
       minWidth: 180,
       flex: 1,
-      renderCell: (params: GridRenderCellParams) => {
-        if (!params.value) return 'Нет данных';
-        return timestampToDDMMYY(String(params.value));
-      },
+      renderCell: (params: GridRenderCellParams) =>
+        params.value ? timestampToDDMMYY(String(params.value)) : 'Нет данных',
     },
   ];
 
   return (
     <Box sx={{ width: '100%', overflowX: 'auto' }}>
       <DataGrid
-        rows={list || []} 
+        rows={list || []}
         columns={columns}
         getRowId={(row) => row.id}
-        onRowClick={(equipment) => handleSetOrder(equipment.row)}
+        sx={{
+          backgroundColor: 'white',
+          borderRadius: 2,
+          boxShadow: 2,
+        }}
       />
     </Box>
   );
 }
+  

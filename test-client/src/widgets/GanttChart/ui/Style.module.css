@@ -21,3 +21,25 @@
     border-radius: 8px;
   }
   
+  .detailBox {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    position: relative;
+  }
+  
+  .closeButton {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #334;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+  
+  .closeButton:hover {
+    background-color: #335;
+  }
+  

@@ -1,25 +1,26 @@
-import React, { useState } from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
-  Toolbar,
-  Typography,
+  Box,
   Button,
   Container,
-  IconButton,
   Drawer,
+  IconButton,
   List,
   ListItem,
   ListItemText,
-  Box,
+  Toolbar,
+  Typography,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
+import React, { useState } from 'react';
+import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { logoutThunk } from '../../entities/user';
+import { useAppDispatch, useAppSelector } from '../../shared/lib/hooks';
 import Style from './Style.module.css';
 
 export default function Layout(): React.JSX.Element {
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -30,7 +31,7 @@ export default function Layout(): React.JSX.Element {
 
   return (
     <div className={Style.appContainer}>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: '#334' }}>
         <Toolbar className={Style.toolbar}>
           {user && (
             <Typography variant="h6" className={Style.userText}>
@@ -42,10 +43,24 @@ export default function Layout(): React.JSX.Element {
           <Box className={Style.desktopMenu}>
             {user && (
               <>
-                <Button color="inherit" component={Link} to="/orders">
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/orders"
+                  sx={{
+                    color: location.pathname === '/orders' ? '#FFD700' : 'inherit', 
+                  }}
+                >
                   Заказы
                 </Button>
-                <Button color="inherit" component={Link} to="/equipment">
+                <Button
+                  color="inherit"
+                  component={Link}
+                  to="/equipment"
+                  sx={{
+                    color: location.pathname === '/equipment' ? '#FFD700' : 'inherit',
+                  }}
+                >
                   Оборудование
                 </Button>
                 <Button
@@ -72,10 +87,24 @@ export default function Layout(): React.JSX.Element {
 
       <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
         <List>
-          <ListItem component={Link} to="/orders" onClick={handleDrawerToggle}>
+          <ListItem
+            component={Link}
+            to="/orders"
+            onClick={handleDrawerToggle}
+            sx={{
+              backgroundColor: location.pathname === '/orders' ? '#FFD700' : 'transparent',
+            }}
+          >
             <ListItemText primary="Заказы" />
           </ListItem>
-          <ListItem component={Link} to="/equipment" onClick={handleDrawerToggle}>
+          <ListItem
+            component={Link}
+            to="/equipment"
+            onClick={handleDrawerToggle}
+            sx={{
+              backgroundColor: location.pathname === '/equipment' ? '#FFD700' : 'transparent',
+            }}
+          >
             <ListItemText primary="Оборудование" />
           </ListItem>
           <ListItem onClick={() => dispatch(logoutThunk()).then(() => navigate('/login'))}>
